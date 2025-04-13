@@ -1,0 +1,20 @@
+{
+  "strain": "Blue Razz",
+  "batch": "TBD",
+  "terpenes": {
+    "limonene": 0.42,
+    "myrcene": 0.36,
+    "caryophyllene": 0.25
+  },
+  "effects": [
+    "Pain relief",
+    "Anti-inflammatory",
+    "Nerve calming"
+  ],
+  "userNotes": [
+    {
+      "effectiveness": 5,
+      "notes": "Pain gone completely, lingering numbness tolerable"
+    }
+  ]
+}
