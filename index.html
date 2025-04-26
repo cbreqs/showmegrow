@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Show Me Grow</title>
+
   <style>
     body {
       margin: 0;
@@ -11,18 +12,20 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
+      background-color: #f6f7f9;
+      color: #333;
       height: 100vh;
+      font-family: system-ui, sans-serif;
       transition: background-image 0.5s ease-in-out, background-color 0.5s ease-in-out;
-      font-family: sans-serif;
     }
 
     .light-mode {
-      background-image: url('assets/mo-day.png'); /* <<< Your real day image */
+      background-image: url('assets/mo-day.png');
       color: #333;
     }
 
     .dark-mode {
-      background-image: url('assets/mo-night.png'); /* <<< Your real night image */
+      background-image: url('assets/mo-night.png');
       color: #fff;
     }
 
@@ -32,7 +35,21 @@
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
-      text-shadow: 0 0 10px rgba(0,0,0,0.7);
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .text-container {
+      background: rgba(255, 255, 255, 0.7);
+      padding: 1.5rem 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      display: inline-block;
+    }
+
+    /* Dark mode adjustment for text container */
+    body.dark-mode .text-container {
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
     }
 
     #mode-toggle {
@@ -47,6 +64,7 @@
       font-weight: bold;
     }
   </style>
+
 </head>
 
 <body class="light-mode">
