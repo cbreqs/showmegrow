@@ -21,7 +21,11 @@
   <div class="button-group">
     <a href="mailto:cb@showmegrow.info" class="button">Email Us</a>
     <a href="#signup" class="button">Join Mailing List</a>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfmUH-fdEpHo9oUDc3lb0yR0WDvh-64KGtCG8sZsXPy-3Y3TQ/viewform?embedded=true" width="640" height="719" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+  </div>
+
+  <!-- Signup form container (hidden by default) -->
+  <div id="signup" class="signup-form">
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfmUH-fdEpHo9oUDc3lb0yR0WDvh-64KGtCG8sZsXPy-3Y3TQ/viewform?embedded=true" width="100%" height="719" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
   </div>
 
   <script>
@@ -42,6 +46,15 @@
     toggleButton.addEventListener('click', () => {
       document.body.classList.toggle('dark-mode');
       document.body.classList.toggle('light-mode');
+    });
+
+    // Mailing list signup toggle
+    const mailingListButton = document.querySelector('a[href="#signup"]');
+    const signupForm = document.getElementById('signup');
+
+    mailingListButton.addEventListener('click', (e) => {
+      e.preventDefault(); // Stop default jump
+      signupForm.classList.toggle('active'); // Show/hide the form
     });
   </script>
 
