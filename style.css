@@ -8,37 +8,10 @@ body {
   background-color: #f6f7f9;
   color: #333;
   height: 100vh;
-  padding: 1rem;
   transition: background-image 0.5s ease-in-out, background-color 0.5s ease-in-out;
 }
 
-header {
-  text-align: center;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #ccc;
-}
-
-.subtitle {
-  font-size: 1.2rem;
-  color: #5a5a5a;
-}
-
-main {
-  max-width: 700px;
-  margin: 2rem auto;
-  padding: 1rem;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
-}
-
-footer {
-  text-align: center;
-  margin-top: 4rem;
-  font-size: 0.9rem;
-  color: #999;
-}
-
+/* Light and Dark Mode Backgrounds */
 .light-mode {
   background-image: url('assets/mo-day.png');
   color: #333;
@@ -49,14 +22,65 @@ footer {
   color: #fff;
 }
 
+/* Centered Main Content */
+.content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+/* Text Container */
 .text-container {
-  background: rgba(255, 255, 255, 0.7); /* white, 70% transparent */
+  background: rgba(255, 255, 255, 0.7);
   padding: 1.5rem 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.2);
   display: inline-block;
 }
-  body.dark-mode .text-container {
-    background: rgba(0, 0, 0, 0.5); /* darker see-through background */
-    color: #fff; /* make sure text stays bright */
- }
+
+/* Text Container in Dark Mode */
+body.dark-mode .text-container {
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+
+/* Mode Toggle Button */
+#mode-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Email + Mailing List Buttons */
+.button-group {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+}
+
+.button {
+  background: rgba(255, 255, 255, 0.8);
+  color: #333;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.button:hover {
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+}
