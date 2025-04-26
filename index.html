@@ -1,35 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Show Me Grow</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Me Grow</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            transition: background-image 0.5s ease-in-out;
+        }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-align: center;
+            font-family: sans-serif;
+            text-shadow: 0 0 10px #000;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Show Me Grow Info</h1>
-    <p class="subtitle">Missouri Cannabis Info</p>
-  </header>
 
-  <main>
-    <section>
-      <h2>Strain Spotlight: Blue Razz</h2>
-      <p><strong>Batch:</strong> #TBD</p>
-      <p><strong>Reported Effects:</strong> Pain relief, reduced nerve inflammation, enhanced comfort</p>
-    </section>
+<div class="content">
+    <h1>Show Me Grow</h1>
+    <p>Your Missouri Cannabis Community</p>
+</div>
 
-    <section>
-      <h2>Lab Data (coming soon)</h2>
-      <p>Linking to METRC JSON + testing results...</p>
-    </section>
-  </main>
+<script>
+    function setBackground() {
+        const hour = new Date().getHours();
+        if (hour >= 6 && hour < 18) {
+            // Daytime
+            document.body.style.backgroundImage = "url('assets/mo-day.png')";
+        } else {
+            // Nighttime
+            document.body.style.backgroundImage = "url('assets/mo-night.png')";
+        }
+    }
 
-  <footer>
-    <p>&copy; 2025 ShowMeGrow.info</p>
-  </footer>
+    setBackground();
+</script>
 
-  <script src="scripts/render.js"></script>
 </body>
 </html>
-
