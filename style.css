@@ -84,3 +84,21 @@ body.dark-mode .text-container {
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
 }
+.signup-form {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 90%;
+  max-width: 600px;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  display: none; /* Hidden until triggered */
+}
+
+/* Show form when user clicks */
+.signup-form.active {
+  display: block;
+}
