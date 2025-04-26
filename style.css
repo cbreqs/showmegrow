@@ -48,3 +48,11 @@ footer {
   background-image: url('assets/mo-night.png');
   color: #fff;
 }
+
+.text-container {
+  background: rgba(255, 255, 255, 0.7); /* white, 70% transparent */
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  display: inline-block;
+}
