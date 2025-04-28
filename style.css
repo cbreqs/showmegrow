@@ -22,17 +22,17 @@ body {
   color: #fff;
 }
 
-/* Centered Main Content */
+/* Top Branding Content */
 .content {
   position: absolute;
-  top: 50%;
+  top: 20px;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%, 0);
   text-align: center;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
 }
 
-/* Text Container */
+/* Text Container for Branding */
 .text-container {
   background: rgba(255, 255, 255, 0.7);
   padding: 1.5rem 2rem;
@@ -41,7 +41,7 @@ body {
   display: inline-block;
 }
 
-/* Text Container in Dark Mode */
+/* Dark Mode adjustment for text container */
 body.dark-mode .text-container {
   background: rgba(0, 0, 0, 0.5);
   color: #fff;
@@ -60,7 +60,7 @@ body.dark-mode .text-container {
   font-weight: bold;
 }
 
-/* Email + Mailing List Buttons */
+/* Button Group (email + signup) */
 .button-group {
   position: absolute;
   bottom: 20px;
@@ -84,11 +84,32 @@ body.dark-mode .text-container {
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
 }
+
+/* Spotlight Strain */
+.spotlight {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+}
+
+body.dark-mode .spotlight {
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+
+/* Signup Form */
 .signup-form {
   position: absolute;
   top: 70%;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translateX(-50%, 0);
   width: 90%;
   max-width: 600px;
   padding: 1rem;
@@ -98,7 +119,7 @@ body.dark-mode .text-container {
   display: none; /* Hidden until triggered */
 }
 
-/* Show form when user clicks */
+/* Show signup form when active */
 .signup-form.active {
   display: block;
 }
