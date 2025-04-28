@@ -9,6 +9,7 @@
 
 <body class="light-mode">
 
+  <!-- Branding at Top -->
   <div class="content">
     <div class="text-container">
       <h1>Show Me Grow</h1>
@@ -23,7 +24,13 @@
     <a href="#signup" class="button">Join Mailing List</a>
   </div>
 
-  <!-- Signup form container (hidden by default) -->
+  <!-- Spotlight Strain Centered -->
+  <div class="spotlight">
+    <h2>Spotlight Strain</h2>
+    <p id="strain-name">Loading...</p>
+  </div>
+
+  <!-- Signup Form -->
   <div id="signup" class="signup-form">
     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfmUH-fdEpHo9oUDc3lb0yR0WDvh-64KGtCG8sZsXPy-3Y3TQ/viewform?embedded=true" width="100%" height="719" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
   </div>
@@ -53,9 +60,27 @@
     const signupForm = document.getElementById('signup');
 
     mailingListButton.addEventListener('click', (e) => {
-      e.preventDefault(); // Stop default jump
-      signupForm.classList.toggle('active'); // Show/hide the form
+      e.preventDefault();
+      signupForm.classList.toggle('active');
     });
+
+    // Spotlight Strain
+    const strains = [
+      "Pineapple Express",
+      "Blue Dream",
+      "Northern Lights",
+      "Sour Diesel",
+      "Gorilla Glue #4",
+      "Wedding Cake",
+      "Purple Punch"
+    ];
+
+    function randomStrain() {
+      const strainName = strains[Math.floor(Math.random() * strains.length)];
+      document.getElementById('strain-name').innerText = strainName;
+    }
+
+    randomStrain();
   </script>
 
 </body>
