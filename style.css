@@ -1,3 +1,4 @@
+/* Basic Reset and Body */
 body {
   margin: 0;
   padding: 0;
@@ -22,7 +23,7 @@ body {
   color: #fff;
 }
 
-/* Top Branding Content */
+/* Branding Content at Top */
 .content {
   position: absolute;
   top: 20px;
@@ -32,16 +33,16 @@ body {
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
 }
 
-/* Text Container for Branding */
+/* Branding Text Container */
 .text-container {
   background: rgba(255, 255, 255, 0.7);
   padding: 1.5rem 2rem;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   display: inline-block;
 }
 
-/* Dark Mode adjustment for text container */
+/* Dark Mode adjustment for Text Container */
 body.dark-mode .text-container {
   background: rgba(0, 0, 0, 0.5);
   color: #fff;
@@ -52,15 +53,59 @@ body.dark-mode .text-container {
   position: absolute;
   top: 20px;
   right: 20px;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.8);
   border: none;
   padding: 0.5rem 1rem;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
+  transition: background 0.3s ease;
 }
 
-/* Button Group (email + signup) */
+#mode-toggle:hover {
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+}
+
+/* Spotlight Strain Center Section */
+.spotlight {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+}
+
+/* Dark Mode Spotlight Adjustment */
+body.dark-mode .spotlight {
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+
+/* Refresh Spotlight Button */
+#refresh-spotlight {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#refresh-spotlight:hover {
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+}
+
+/* Bottom Buttons Group */
 .button-group {
   position: absolute;
   bottom: 20px;
@@ -85,26 +130,7 @@ body.dark-mode .text-container {
   color: #fff;
 }
 
-/* Spotlight Strain */
-.spotlight {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  background: rgba(255, 255, 255, 0.7);
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  max-width: 500px;
-}
-
-body.dark-mode .spotlight {
-  background: rgba(0, 0, 0, 0.5);
-  color: #fff;
-}
-
-/* Signup Form */
+/* Signup Form Section (Hidden Initially) */
 .signup-form {
   position: absolute;
   top: 70%;
@@ -116,26 +142,10 @@ body.dark-mode .spotlight {
   background: rgba(255, 255, 255, 0.85);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  display: none; /* Hidden until triggered */
+  display: none;
 }
 
-/* Show signup form when active */
+/* When Signup Form is Active */
 .signup-form.active {
   display: block;
-}
-#refresh-spotlight {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  font-weight: bold;
-  background: rgba(255, 255, 255, 0.8);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-#refresh-spotlight:hover {
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
 }
