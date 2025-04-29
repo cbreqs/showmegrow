@@ -123,3 +123,19 @@ body.dark-mode .spotlight {
 .signup-form.active {
   display: block;
 }
+#refresh-spotlight {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#refresh-spotlight:hover {
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+}
