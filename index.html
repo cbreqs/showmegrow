@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Show Me Grow</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body class="light-mode">
@@ -17,71 +18,95 @@
     </div>
   </div>
 
+  <!-- Mode Toggle Button -->
   <button id="mode-toggle">Switch Mode</button>
-
-  <div class="button-group">
-    <a href="mailto:cb@showmegrow.info" class="button">Email Us</a>
-    <a href="#signup" class="button">Join Mailing List</a>
-  </div>
 
   <!-- Spotlight Strain Centered -->
   <div class="spotlight">
     <h2>Spotlight Strain</h2>
     <p id="strain-name">Loading...</p>
-    <button id="refresh-spotlight">Refresh Spotlight</button> <!-- New button here -->
+    <button id="refresh-spotlight">Refresh Spotlight</button>
   </div>
 
-  <!-- Signup Form -->
+  <!-- Bottom Buttons -->
+  <div class="button-group">
+    <a href="mailto:cb@showmegrow.info" class="button">Email Us</a>
+    <a href="#signup" class="button">Join Mailing List</a>
+  </div>
+
+  <!-- Signup Form Hidden Initially -->
   <div id="signup" class="signup-form">
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfmUH-fdEpHo9oUDc3lb0yR0WDvh-64KGtCG8sZsXPy-3Y3TQ/viewform?embedded=true" width="100%" height="719" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfmUH-fdEpHo9oUDc3lb0yR0WDvh-64KGtCG8sZsXPy-3Y3TQ/viewform?embedded=true" width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
   </div>
 
+  <!-- Main Scripts -->
   <script>
-    function setBackground() {
-      const hour = new Date().getHours();
-      if (hour >= 6 && hour < 18) {
-        document.body.classList.add('light-mode');
-        document.body.classList.remove('dark-mode');
-      } else {
-        document.body.classList.add('dark-mode');
-        document.body.classList.remove('light-mode');
-      }
+  console.log("Show Me Grow – JS Loaded");
+
+  // Connect to Supabase
+  const SUPABASE_URL = 'https://czfygwfzagqqarumtbsk.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN6Znlnd2Z6YWdxcWFydW10YnNrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU4ODI5NDIsImV4cCI6MjA2MTQ1ODk0Mn0.c8srfN2tgFoYz1-mAPepd_FgHtWjkAI1oQgth1oXzlQ'; // Replace with full real key
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // Set Background based on Time
+  function setBackground() {
+    const hour = new Date().getHours();
+    if (hour >= 6 && hour < 18) {
+      document.body.classList.add('light-mode');
+      document.body.classList.remove('dark-mode');
+    } else {
+      document.body.classList.add('dark-mode');
+      document.body.classList.remove('light-mode');
+    }
+  }
+
+  setBackground();
+
+  // Mode Toggle Button
+  const toggleButton = document.getElementById('mode-toggle');
+  toggleButton.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    document.body.classList.toggle('light-mode');
+  });
+
+  // Mailing List Toggle Button
+  const mailingListButton = document.querySelector('a[href="#signup"]');
+  const signupForm = document.getElementById('signup');
+  mailingListButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    signupForm.classList.toggle('active');
+  });
+
+  // Load and Display Random Spotlight Strain
+  async function loadSpotlightStrain() {
+    const { data, error } = await supabase
+      .from('strains')
+      .select('name, type, description');
+
+    if (error) {
+      console.error('Error fetching strains:', error);
+      return;
     }
 
-    setBackground();
-
-    const toggleButton = document.getElementById('mode-toggle');
-    toggleButton.addEventListener('click', () => {
-      document.body.classList.toggle('dark-mode');
-      document.body.classList.toggle('light-mode');
-    });
-
-    // Mailing list signup toggle
-    const mailingListButton = document.querySelector('a[href="#signup"]');
-    const signupForm = document.getElementById('signup');
-
-    mailingListButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      signupForm.classList.toggle('active');
-    });
-
-    // Spotlight Strain
-    const strains = [
-      "Pineapple Express",
-      "Blue Dream",
-      "Northern Lights",
-      "Sour Diesel",
-      "Gorilla Glue #4",
-      "Wedding Cake",
-      "Purple Punch"
-    ];
-
-    function randomStrain() {
-      const strainName = strains[Math.floor(Math.random() * strains.length)];
-      document.getElementById('strain-name').innerText = strainName;
+    if (data.length > 0) {
+      const randomStrain = data[Math.floor(Math.random() * data.length)];
+      document.getElementById('strain-name').innerHTML = `
+        <strong>${randomStrain.name}</strong><br>
+        <em>${randomStrain.type || 'Type Unknown'}</em><br>
+        <p>${randomStrain.description || 'No description available.'}</p>
+      `;
     }
+  }
 
-    randomStrain();
+  // Attach Refresh Button Listener
+  const refreshButton = document.getElementById('refresh-spotlight');
+  if (refreshButton) {
+    refreshButton.addEventListener('click', loadSpotlightStrain);
+  }
+
+  // Load initial strain on page load
+  loadSpotlightStrain();
+
   </script>
 
 </body>
