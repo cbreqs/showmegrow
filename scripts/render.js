@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Load and Display Spotlight Strain
   async function loadSpotlightStrain() {
-    const { data, error } = await supabase
+    const { data, error } = await client
       .from('strains')
       .select('name, type, description');
 
