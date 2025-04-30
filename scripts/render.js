@@ -37,6 +37,8 @@
 
   // Load and Display Spotlight Strain
   async function loadSpotlightStrain() {
+    console.log("loadSpotlightStrain function started"); 
+    
     const { data, error } = await client
       .from('strains')
       .select('name, type, description');
