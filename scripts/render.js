@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Connect to Supabase
   const SUPABASE_URL = 'https://czfygwfzagqqarumtbsk.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN6Znlnd2Z6YWdxcWFydW10YnNrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU4ODI5NDIsImV4cCI6MjA2MTQ1ODk0Mn0.c8srfN2tgFoYz1-mAPepd_FgHtWjkAI1oQgth1oXzlQ'; // Paste full real key here
-  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   // Set Background based on Time
   function setBackground() {
