@@ -60,12 +60,12 @@
     }
   }
 
+document.addEventListener('DOMContentLoaded', () => {
+  
   // Attach Refresh Button
   const refreshButton = document.getElementById('refresh-spotlight');
   if (refreshButton) {
     refreshButton.addEventListener('click', loadSpotlightStrain);
   }
-
-  // Load initial Spotlight strain on page load
-  loadSpotlightStrain();
+   loadSpotlightStrain();
 });
