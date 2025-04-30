@@ -52,11 +52,15 @@
     
     if (data.length > 0) {
       const randomStrain = data[Math.floor(Math.random() * data.length)];
+      console.log("Selected random strain:", randomStrain);
+      
       document.getElementById('strain-name').innerHTML = `
         <strong>${randomStrain.name}</strong><br>
         <em>${randomStrain.type || 'Type Unknown'}</em><br>
         <p>${randomStrain.description || 'No description available.'}</p>
       `;
+    } else {
+      console.warn("Strains table returned an empty array.");
     }
   }
 
