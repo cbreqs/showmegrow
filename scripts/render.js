@@ -46,6 +46,8 @@
       return;
     }
 
+    console.log("Supabase data returned:", data);
+    
     if (data.length > 0) {
       const randomStrain = data[Math.floor(Math.random() * data.length)];
       document.getElementById('strain-name').innerHTML = `
