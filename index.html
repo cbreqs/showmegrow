@@ -2,35 +2,54 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Show Me Grow</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Show Me Grow | Strain Spotlight</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body { font-family: sans-serif; background: #f4f4f4; padding: 2rem; }
+    .strain-box { background: white; border-radius: 10px; padding: 1rem 2rem; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 500px; margin: 2rem auto; }
+    .strain-box h2 { margin-bottom: 0.5rem; }
+    .strain-box p { margin: 0.25rem 0; }
+    input { padding: 0.5rem; width: 70%; margin-right: 0.5rem; }
+    button { padding: 0.5rem 1rem; cursor: pointer; }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Show Me Grow Info</h1>
-    <p class="subtitle">Missouri Cannabis + Effects Tracker</p>
-  </header>
 
-  <main>
-    <section>
-      <h2>Strain Spotlight: Blue Razz</h2>
-      <p><strong>Batch:</strong> #TBD</p>
-      <p><strong>Reported Effects:</strong> Pain relief, reduced nerve inflammation, enhanced comfort</p>
-    </section>
+  <div class="strain-box" id="strainDisplay">
+    <h2>Loading random strain...</h2>
+  </div>
 
-    <section>
-      <h2>Lab Data (coming soon)</h2>
-      <p>Linking to METRC JSON + testing results...</p>
-    </section>
-  </main>
+  <div style="text-align:center;">
+    <input type="text" id="searchInput" placeholder="Enter strain, brand, or tag ID"/>
+    <button onclick="searchStrain()">Search</button>
+    <button onclick="loadRandomStrain()">🔄 Random</button>
+  </div>
 
-  <footer>
-    <p>&copy; 2025 ShowMeGrow.info</p>
-  </footer>
+  <script>
+    let strains = [];
 
-  <script src="scripts/render.js"></script>
-</body>
-</html>
+    fetch('./data/strains.json')
+      .then(res => res.json())
+      .then(data => {
+        strains = data;
+        loadRandomStrain();
+      });
 
+    function loadRandomStrain() {
+      if (!strains.length) return;
+      const random = strains[Math.floor(Math.random() * strains.length)];
+      displayStrain(random);
+    }
+
+    function searchStrain() {
+      const term = document.getElementById('searchInput').value.toLowerCase();
+      const found = strains.find(s =>
+        s.tag_id.toLowerCase().includes(term) ||
+        s.strain.toLowerCase().includes(term) ||
+        s.brand.toLowerCase().includes(term)
+      );
+      if (found) {
+        displayStrain(found);
+      } else {
+        document.getElementById('strainDisplay').innerHTML = `<h2>No match found.</h2>`
