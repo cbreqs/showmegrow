@@ -45,11 +45,27 @@
     function searchStrain() {
       const term = document.getElementById('searchInput').value.toLowerCase();
       const found = strains.find(s =>
-        s.tag_id.toLowerCase().includes(term) ||
-        s.strain.toLowerCase().includes(term) ||
-        s.brand.toLowerCase().includes(term)
+        (s.tag_id || '').toLowerCase().includes(term) ||
+        (s.strain || '').toLowerCase().includes(term) ||
+        (s.brand || '').toLowerCase().includes(term)
       );
       if (found) {
         displayStrain(found);
       } else {
-        document.getElementById('strainDisplay').innerHTML = `<h2>No match found.</h2>`
+        document.getElementById('strainDisplay').innerHTML = `<h2>No match found.</h2>`;
+      }
+    }
+
+    function displayStrain(s) {
+      document.getElementById('strainDisplay').innerHTML = `
+        <h2>${s.strain || 'Unknown Strain'}</h2>
+        <p><strong>Brand:</strong> ${s.brand || 'N/A'}</p>
+        <p><strong>Product:</strong> ${s.product || 'N/A'}</p>
+        <p><strong>Category:</strong> ${s.category || 'N/A'}</p>
+        <p><strong>Tag ID:</strong> ${s.tag_id || 'N/A'}</p>
+      `;
+    }
+  </script>
+
+</body>
+</html>
