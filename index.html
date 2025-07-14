@@ -4,8 +4,51 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Show Me Grow</title>
+      <!-- Firebase SDKs -->
+    <script type="module">
+      // Import the functions you need from the SDKs
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+      // Your web app's Firebase configuration
+        const firebaseConfig = {
+        apiKey: "AIzaSyB9TwtGcDQJrJgYlcpUmtggJxvcF6MTlCk",
+        authDomain: "showmegrowinfo.firebaseapp.com",
+        projectId: "showmegrowinfo",
+        storageBucket: "showmegrowinfo.firebasestorage.app",
+        messagingSenderId: "317414799927",
+        appId: "1:317414799927:web:81a6a76b52511bbad51db2"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      window.submitEmail = async function (event) {
+        event.preventDefault();
+        const emailInput = document.getElementById("email");
+        const email = emailInput.value.trim();
+
+        if (!email) return alert("Please enter a valid email.");
+
+        try {
+          await addDoc(collection(db, "signups"), {
+            email,
+            timestamp: new Date()
+          });
+          emailInput.value = "";
+            const confirmation = document.getElementById("signup-confirmation");
+            confirmation.classList.add("show");
+            setTimeout(() => {
+              confirmation.classList.remove("show");
+            }, 3000);
+        } catch (e) {
+          console.error("Error adding document: ", e);
+          alert("Something went wrong. Try again?");
+        }
+      };
+    </script>
+
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body class="light-mode">
@@ -34,19 +77,17 @@
     <a href="#signup" class="button">Join Mailing List</a>
   </div>
 
-  <!-- Signup Form Hidden Initially -->
+  <!-- Signup Form -->
   <div id="signup" class="signup-form">
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfmUH-fdEpHo9oUDc3lb0yR0WDvh-64KGtCG8sZsXPy-3Y3TQ/viewform?embedded=true" width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+    <form onsubmit="submitEmail(event)">
+      <input id="email" type="email" placeholder="Your email" required />
+      <button type="submit">Notify Me</button>
+    </form>
   </div>
 
   <!-- Main Scripts -->
   <script>
   console.log("Show Me Grow – JS Loaded");
-
-  // Connect to Supabase
-  const SUPABASE_URL = 'https://czfygwfzagqqarumtbsk.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN6Znlnd2Z6YWdxcWFydW10YnNrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU4ODI5NDIsImV4cCI6MjA2MTQ1ODk0Mn0.c8srfN2tgFoYz1-mAPepd_FgHtWjkAI1oQgth1oXzlQ'; // Replace with full real key
-  const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   // Set Background based on Time
   function setBackground() {
@@ -108,6 +149,6 @@
   loadSpotlightStrain();
 
   </script>
-
+<div id="signup-confirmation" class="confirmation-popup">Thanks! You’ll be notified.</div>
 </body>
 </html>
