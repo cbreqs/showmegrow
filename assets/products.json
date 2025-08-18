@@ -1,0 +1,51 @@
+{
+  "products": [
+    {
+      "name": "Tahoe OG",
+      "summary": "Classic indica-leaning profile with pine and lemon. Relaxing, body-heavy calm.",
+      "image": "assets/images/placeholder.jpg",
+      "lucid_url": "https://luc.id/placeholder/tahoe-og",
+      "tags": [
+        "Indica-leaning",
+        "Pine",
+        "Lemon",
+        "Relax",
+        "Calm",
+        "Evening"
+      ],
+      "thc": "20\u201324%",
+      "terpenes": [
+        "Myrcene",
+        "Pinene",
+        "Limonene"
+      ]
+    },
+    {
+      "name": "Blue Sage Gooey Butter Cookie (edible)",
+      "summary": "St. Louis favorite flavors; gentle onset when dosed low. Comfort snack vibes.",
+      "image": "assets/images/placeholder.jpg",
+      "lucid_url": "https://luc.id/placeholder/blue-sage-gbc",
+      "tags": [
+        "Edible",
+        "Balanced",
+        "Missouri",
+        "Comfort"
+      ],
+      "thc": "Varies by package",
+      "terpenes": []
+    },
+    {
+      "name": "Codes Xtreme Pre-roll",
+      "summary": "Potent, fast-acting. Good for experienced users watching dosage.",
+      "image": "assets/images/placeholder.jpg",
+      "lucid_url": "https://luc.id/placeholder/codes-xtreme",
+      "tags": [
+        "Pre-roll",
+        "Potent",
+        "Fast-acting"
+      ],
+      "thc": "High",
+      "terpenes": []
+    }
+  ]
+}
