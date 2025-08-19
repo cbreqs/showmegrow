@@ -157,7 +157,7 @@
     // 3) Create a collection "newsletter" with fields: name, email, ts.
     // If config is left as placeholders, we degrade gracefully and log to console.
 
-    const FIREBASE_ENABLED = false; // flip true after adding config & scripts
+    const FIREBASE_ENABLED = true; // flip true after adding config & scripts
 
     // Optional: paste Firebase CDN scripts right above this line when enabling.
     // <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"><\/script>
@@ -176,17 +176,16 @@
     const form = document.getElementById('signup');
     form.addEventListener('submit', async (e)=>{
       e.preventDefault();
-      const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
       const msg = document.getElementById('msg');
 
-      if(!name || !email){ msg.textContent = 'Please enter your name and email.'; return; }
+      if(!email){ msg.textContent = 'Please enter your email.'; return; }
 
       try{
         if(FIREBASE_ENABLED && window.firebase){
           const app = firebase.initializeApp(firebaseConfig);
           const db = firebase.firestore(app);
-          await db.collection('newsletter').add({ name, email, ts: new Date().toISOString() });
+          await db.collection('newsletter').add({ email, ts: new Date().toISOString() });
           msg.textContent = 'Thanks! You\'re on the list.';
         } else {
           console.log('[DEV only] Would save to Firebase:', {name,email});
