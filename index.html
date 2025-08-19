@@ -6,17 +6,20 @@
   <title>Show Me Grow Info — Missouri Cannabis, Simplified</title>
   <meta name="description" content="Show Me Grow helps Missourians explore strains, products, and real-world effects. Spotlight strains, newsletter, and more." />
 
+  <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css" />
-  <script defer src="js/main.js" type="module"></script>
+
+  <!-- App code -->
+  <script type="module" src="js/main.js"></script>
 
   <style>
     /* Transparent video mode – force-on overrides */
-    .scrim { display: none !important; } /* remove dark overlay */
+    .scrim { display: none !important; }
 
     header.site,
     .hero,
     .section {
-      background: transparent !important; /* show the video through */
+      background: transparent !important;
       backdrop-filter: blur(6px);
       border-color: rgba(255,255,255,0.18) !important;
     }
@@ -31,6 +34,7 @@
     header.site, main, footer { position: relative; z-index: 2; }
   </style>
 </head>
+
 <body>
   <div class="video-bg" aria-hidden="true">
     <video id="bgVideo"
