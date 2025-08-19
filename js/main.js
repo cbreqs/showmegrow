@@ -2,7 +2,7 @@
 import { db } from "./firebase-config.js";
 import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
-// Spotlight elements
+// -------- Spotlight ----------
 const elName = document.getElementById("spotlight-name");
 const elSummary = document.getElementById("spotlight-summary");
 const elImage = document.getElementById("spotlight-image");
@@ -10,40 +10,19 @@ const elTags = document.getElementById("spotlight-tags");
 const elLucid = document.getElementById("spotlight-lucid");
 const btnRandom = document.getElementById("randomize");
 
-// Load spotlight products
 async function loadProducts() {
   const bust = `?t=${Date.now()}`;
-  async function tryLoad(url) {
-    const res = await fetch(url + bust, { cache: "no-store" });
-    if (!res.ok) throw new Error(url + " not found");
-    return res.json();
-  }
-
-  try {
-    const item = await tryLoad("./data/blue-razz.json");
-    return [item];
-  } catch (_) {
-    try {
-      const data = await tryLoad("./assets/products.json");
-      return data.products || [];
-    } catch (e2) {
-      console.warn("Spotlight data not found.", e2);
-      return [];
-    }
-  }
+  const fetchJson = async (p) => {
+    const r = await fetch(p + bust, { cache: "no-store" });
+    if (!r.ok) throw new Error(p);
+    return r.json();
+  };
+  try { return [await fetchJson("./data/blue-razz.json")]; }
+  catch { try { const d = await fetchJson("./assets/products.json"); return d.products || []; }
+  catch { return []; } }
 }
 
-function pickDeterministic(items) {
-  const today = new Date();
-  const seed = parseInt(today.toISOString().slice(0, 10).replaceAll("-", ""), 10);
-  if (items.length === 0) return null;
-  return items[seed % items.length];
-}
-
-function pickRandom(items) {
-  if (items.length === 0) return null;
-  return items[Math.floor(Math.random() * items.length)];
-}
+const pick = (arr) => arr.length ? arr[Math.floor(Math.random()*arr.length)] : null;
 
 function renderSpotlight(item) {
   if (!item) return;
@@ -53,39 +32,33 @@ function renderSpotlight(item) {
   elImage.alt = item.name ? `Photo of ${item.name}` : "Spotlight strain";
   elLucid.href = item.lucid_url || "#";
   elTags.innerHTML = "";
-  (item.tags || []).slice(0, 8).forEach((tag) => {
-    const s = document.createElement("span");
-    s.className = "tag";
-    s.textContent = tag;
-    elTags.appendChild(s);
+  (item.tags || []).slice(0,8).forEach(t=>{
+    const span=document.createElement("span");
+    span.className="tag";
+    span.textContent=t;
+    elTags.appendChild(span);
   });
 }
 
 async function initSpotlight() {
   const items = await loadProducts();
-  renderSpotlight(pickDeterministic(items));
-  btnRandom.addEventListener("click", () => {
-    renderSpotlight(pickRandom(items));
-  });
+  if (items.length) renderSpotlight(items[0]);
+  if (btnRandom) btnRandom.addEventListener("click", ()=>renderSpotlight(pick(items)));
 }
 
-// Newsletter signup handler
+// -------- Newsletter ----------
 async function initNewsletter() {
   const form = document.getElementById("subscribe-form");
   const status = document.getElementById("subscribe-status");
   if (!form) return;
-
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", async (e)=>{
     e.preventDefault();
-    const email = (document.getElementById("email").value || "").trim();
+    const email = (document.getElementById("email").value||"").trim();
     if (!email) return;
     status.textContent = "Submitting...";
-
     try {
       await addDoc(collection(db, "signups"), {
-        email,
-        created_at: serverTimestamp(),
-        source: "showmegrow.info",
+        email, created_at: serverTimestamp(), source: "showmegrow.info"
       });
       status.textContent = "Thanks! You are on the list.";
       form.reset();
@@ -96,46 +69,30 @@ async function initNewsletter() {
   });
 }
 
-// Background video ping-pong
+// -------- Background video ping-pong ----------
 (() => {
-  const SPEED = 0.6;
-  const FPS = 30;
+  const SPEED = 0.6, FPS = 30;
   const v = document.getElementById("bgVideo");
   if (!v) return;
-
-  function setup() {
-    v.playbackRate = SPEED;
-    v.loop = false;
-  }
-
-  function scrubReverse(video, fps = 30) {
-    const step = 1 / fps;
-    return new Promise((resolve) => {
-      function onSeeked() {
-        if (video.currentTime <= step) {
-          video.removeEventListener("seeked", onSeeked);
-          video.currentTime = 0;
-          resolve();
-        } else {
-          video.currentTime = Math.max(0, video.currentTime - step);
+  v.addEventListener("loadedmetadata", ()=>{ v.playbackRate = SPEED; v.loop = false; });
+  v.addEventListener("ended", async ()=>{
+    const step = 1/FPS;
+    function backOnce() {
+      return new Promise((res)=>{
+        function onSeeked(){
+          if (v.currentTime <= step){ v.removeEventListener("seeked", onSeeked); v.currentTime = 0; res(); }
+          else v.currentTime = Math.max(0, v.currentTime - step);
         }
-      }
-      video.pause();
-      video.addEventListener("seeked", onSeeked);
-      video.currentTime = Math.max(0, video.currentTime - step);
-    });
-  }
-
-  v.addEventListener("loadedmetadata", setup);
-  v.addEventListener("ended", async () => {
-    await scrubReverse(v, FPS);
-    v.playbackRate = SPEED;
-    v.play();
+        v.pause(); v.addEventListener("seeked", onSeeked);
+        v.currentTime = Math.max(0, v.currentTime - step);
+      });
+    }
+    await backOnce(); v.playbackRate = SPEED; v.play();
   });
 })();
 
-// Initialize when DOM is ready
-document.addEventListener("DOMContentLoaded", () => {
+// -------- Init when DOM ready ----------
+document.addEventListener("DOMContentLoaded", ()=>{
   initSpotlight();
   initNewsletter();
 });
