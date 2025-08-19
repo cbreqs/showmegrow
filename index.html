@@ -4,111 +4,46 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Show Me Grow Info — Missouri Cannabis, Simplified</title>
-  <meta name="description" content="Show Me Grow helps Missourians explore strains, products, and real-world effects. Spotlight strain, reviews, and a simple newsletter powered by Firebase." />
-  <link rel="preload" href="/media/retreat.mp4" as="video" type="video/mp4">
-  <link rel="preload" href="/media/retreat-poster.jpg" as="image">
-  <link rel="stylesheet" href="/css/styles.css" />
-  <script defer src="/js/main.js" type="module"></script>
-	<style>
-	  /* Transparent video mode — force-on overrides */
-	  .scrim { display: none !important; } /* remove dark overlay */
+  <meta name="description" content="Show Me Grow helps Missourians explore strains, products, and real-world effects. Spotlight strains, newsletter, and more." />
 
-	  header.site,
-	  .hero,
-	  .section {
-		background: transparent !important;   /* show the video through */
-		backdrop-filter: blur(6px);           /* keep readability */
-		border-color: rgba(255,255,255,0.18) !important;
-	  }
-
-	  /* soften buttons/links but keep legible over motion */
-	  nav a, .btn, .link {
-		background: rgba(100,140,130,0.10) !important; /* #648C82 @ 10% */
-		border-color: rgba(100,140,130,0.25) !important;
-	  }
-			  /* Stack fix: show the video through transparent panels */
-		.video-bg { z-index: 0 !important; }          /* bring video above body background */
-		.scrim    { z-index: 1 !important; }          /* keep if you re-enable it later */
-		header.site, main, footer {
-		  position: relative; 
-		  z-index: 2;                                 /* keep content above the video */
-		}
-		/* optional: ensure clicks go to content, not the video */
-		.video-bg, .video-bg * { pointer-events: none; 
-	  }
-		/* Zoom & crop the background video to hide the right edge */
-		:root{
-		  --bg-zoom: 1.29;     /* 1.05–1.30 = how much to zoom in */
-		  --bg-focus-x: 35%;   /* 0% left  ↔  100% right */
-		  --bg-focus-y: 52%;   /* 0% top   ↔  100% bottom */
-	  }
-		.video-bg video{
-		  object-fit: cover;
-		  object-position: var(--bg-focus-x) var(--bg-focus-y);
-		  transform: scale(var(--bg-zoom)) translateZ(0);
-		  transform-origin: var(--bg-focus-x) var(--bg-focus-y);
-	  }
-	  /* === Always-legible text pack === */
-		:root{
-		  --text-strong: #EAF2EF;            /* near-white */
-		  --text-soft:   #D7E6E1;
-		  --plate:       rgba(1, 2, 4, 0.1); /* subtle dark plate for long copy */
-		  --halo-dark:   rgba(0,0,0,0.55);
-		  --halo-mid:    rgba(0,0,0,0.35);
-		  --halo-lite:   rgba(255,255,255,0.15);
-		}
-
-		/* Headings + body text over video */
-		.hero h1, .hero p,
-		.section h2, .section p,
-		.section small, footer, .disclaimer,
-		label {
-		  color: var(--text-strong) !important;
-		  text-shadow:
-			0 1px 1px var(--halo-dark),
-			0 0 3px var(--halo-mid),
-			0 0 8px var(--halo-mid),
-			0 0 1px var(--halo-lite);
-		  -webkit-text-stroke: 0.4px rgba(0,0,0,0.25); /* Chrome/Safari safety */
-		  text-rendering: optimizeLegibility;
-		}
-
-		/* Inputs + buttons readable everywhere */
-		input, button, .btn, nav a, .link {
-		  color: var(--text-strong) !important;
-		}
-		input::placeholder {
-		  color: color-mix(in oklab, var(--text-strong) 65%, transparent);
-		}
-
-		/* Plate only behind the text column (not the image) */
-		.hero > div:first-child,
-		.section {
-		  background: var(--plate);
-		  backdrop-filter: blur(4px);
-		  border-radius: 14px;
-		  padding: clamp(12px, 2vw, 20px);
-		}
-
-		/* If footer text feels faint */
-		footer, .disclaimer { color: var(--text-soft) !important; 
-		}
-
-	</style>
+  <link rel="stylesheet" href="css/styles.css" />
   <script defer src="js/main.js" type="module"></script>
+
+  <style>
+    /* Transparent video mode – force-on overrides */
+    .scrim { display: none !important; } /* remove dark overlay */
+
+    header.site,
+    .hero,
+    .section {
+      background: transparent !important; /* show the video through */
+      backdrop-filter: blur(6px);
+      border-color: rgba(255,255,255,0.18) !important;
+    }
+
+    nav a, .btn, .link {
+      background: rgba(100,140,130,0.10) !important;
+      border-color: rgba(100,140,130,0.25) !important;
+    }
+
+    .video-bg { z-index: 0 !important; }
+    .scrim { z-index: 1 !important; }
+    header.site, main, footer { position: relative; z-index: 2; }
+  </style>
 </head>
 <body>
   <div class="video-bg" aria-hidden="true">
-	  <video id="bgVideo"
-	    autoplay
-	    muted
-	    loop
-	    playsinline
-	    poster="/media/retreat-poster.jpg"
-	    style="width:100%;height:100%;object-fit:cover;position:fixed;top:0;left:0;z-index:-1;">
-	    <source src="/media/retreat.mp4" type="video/mp4">
-	  </video>
-	</div>
+    <video id="bgVideo"
+           autoplay
+           muted
+           loop
+           playsinline
+           poster="media/retreat-poster.jpg"
+           style="width:100%;height:100%;object-fit:cover;position:fixed;top:0;left:0;z-index:-1;">
+      <source src="media/bg.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
 
   <div class="scrim" aria-hidden="true"></div>
 
@@ -122,44 +57,27 @@
   </header>
 
   <main>
-    <section id="spotlight" class="hero" aria-live="polite">
-      <div>
-        <h1 id="spotlight-name">Spotlight Strain</h1>
-        <p id="spotlight-summary">Rotates automatically from your product data. Tap Randomize to cycle.</p>
-        <div id="spotlight-tags" class="tags"></div>
-        <div class="actions">
-          <a id="spotlight-lucid" href="#" target="_blank" rel="noopener" class="btn-accent btn">View LucidID</a>
-          <button id="randomize" class="btn" type="button">Randomize</button>
-        </div>
-      </div>
-      <div>
-        <img id="spotlight-image" src="assets/images/placeholder.jpg" alt="Spotlight product image">
-      </div>
+    <section class="hero">
+      <h2>Spotlight Strain</h2>
+      <div id="spotlight">Loading…</div>
+      <button id="refreshSpotlight" class="btn">Randomize</button>
+      <a id="lucididLink" href="#" target="_blank" class="btn">View LucidID</a>
     </section>
 
-    <section id="newsletter" class="section" aria-labelledby="newsletter-title">
-      <h2 id="newsletter-title">Sign up for our newsletter</h2>
-      <p>Site info; new posts; local Missouri strain notes. Let me know if you want to be updated!.</p>
-      <form id="subscribe-form" aria-label="Newsletter sign-up">
-        <div class="form-row">
-          <label for="email" class="visually-hidden">Email</label>
-          <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required />
-          <button type="submit" class="btn-accent btn">Subscribe</button>
-        </div>
-        <small id="subscribe-status" role="status" aria-live="polite"></small>
+    <section class="section" id="newsletter">
+      <h2>Sign up for our newsletter</h2>
+      <p>Site info; new posts; local Missouri strain notes. Let me know if you want to be updated:</p>
+      <form id="emailForm">
+        <input type="email" id="emailInput" placeholder="you@example.com" required />
+        <button type="submit" class="btn">Subscribe</button>
       </form>
-      <small class="disclaimer">You can unsubscribe anytime. We never sell your data.</small>
+      <p class="disclaimer">You can unsubscribe anytime. We never sell your data.</p>
     </section>
   </main>
 
   <footer>
-    <div>© 2025 Show Me Grow Info (TYP, LLC). Made for Missouri cannabis consumers.</div>
-    <small class="disclaimer">21+ only. This site does not sell cannabis and is not a dispensary.</small>
+    <p>© 2025 Show Me Grow Info (TYP, LLC). Made for Missouri cannabis consumers.<br />
+    21+ only. This site does not sell cannabis and is not a dispensary.</p>
   </footer>
-
-  <!-- Firebase (fill in your config in js/firebase-config.js) -->
-  <!-- When deployed, these load from Google's CDN. -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 </body>
 </html>
