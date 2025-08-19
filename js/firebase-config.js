@@ -1,9 +1,6 @@
-// Replace with your Firebase project config from Firebase Console > Project settings > General
-// For security, allow only email writes in Firestore with appropriate security rules.
-export let isConfigured = false;
-
-export let firebaseApp = null;
-export let db = null;
+// js/firebase-config.js
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
 try {
    const config = {
