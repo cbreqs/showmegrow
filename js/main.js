@@ -80,8 +80,8 @@ async function initNewsletter() {
     }
 
     try {
-      // Write to Firestore: collection 'newsletter_signups'
-      const docRef = await db.collection('newsletter_signups').add({
+      // Write to Firestore: collection 'signups'
+      const docRef = await db.collection('signups').add({
         email,
         created_at: new Date().toISOString(),
         source: 'showmegrow.info'
