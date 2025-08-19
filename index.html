@@ -3,155 +3,198 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Show Me Grow Info — Missouri Cannabis, Simplified</title>
-  <meta name="description" content="Show Me Grow helps Missourians explore strains, products, and real-world effects. Spotlight strain, reviews, and a simple newsletter powered by Firebase." />
-  <link rel="preload" href="media/retreat.mp4" as="video" type="video/mp4">
-  <link rel="preload" href="media/retreat-poster.jpg" as="image">
-  <link rel="stylesheet" href="css/styles.css" />
-	<style>
-	  /* Transparent video mode — force-on overrides */
-	  .scrim { display: none !important; } /* remove dark overlay */
+  <title>ShowMeGrow — Missouri Cannabis, Clearly</title>
+  <meta name="description" content="ShowMeGrow helps Missouri consumers track products, learn from transparent data, and find what actually works for them." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      /* Replace these once we pick the palette from your reference image */
+      --bg-0:#041014; /* deep blue-green */
+      --bg-1:#071b22; /* card bg */
+      --ink:#e9f3f1; /* text */
+      --accent:#37c597; /* buttons */
+      --accent-2:#a6f6d2; /* glow */
+      --muted:#7fa5a0;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--ink); background: radial-gradient(1200px 800px at 20% -10%, #0a2a33, transparent 60%),
+      radial-gradient(900px 600px at 100% 0%, #0b3a2c, transparent 60%), linear-gradient(180deg, var(--bg-0), #05181d 50%, var(--bg-0));
+      font-family: Roboto, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif;
+      line-height:1.5;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:1100px; margin:0 auto; padding:24px}
+    header{display:flex; align-items:center; justify-content:space-between; gap:16px}
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{width:44px; height:44px; border-radius:12px; background:linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow:0 0 40px rgba(55,197,151,.35)}
+    h1{font-family:Merriweather, serif; font-size:clamp(28px, 4vw, 44px); letter-spacing:.5px; margin:0}
+    .cta-btn{background:var(--accent); color:#06231e; border:none; padding:12px 16px; border-radius:14px; font-weight:700; box-shadow:0 10px 30px rgba(55,197,151,.35); cursor:pointer}
+    .cta-btn:focus{outline:2px solid var(--accent-2)}
+    .grid{display:grid; gap:20px; grid-template-columns:1.2fr .8fr}
+    .hero{margin-top:28px; padding:28px; border-radius:18px; background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid rgba(255,255,255,.06); box-shadow:0 12px 40px rgba(0,0,0,.25)}
+    .hero h2{font-family:Merriweather, serif; font-size:clamp(22px,3vw,32px); margin:0 0 8px}
+    .hero p{color:var(--muted); margin:0 0 16px}
+    .card{padding:22px; border-radius:14px; background:var(--bg-1); border:1px solid rgba(255,255,255,.06)}
+    .stack{display:flex; flex-direction:column; gap:12px}
+    .split{display:flex; align-items:center; gap:14px}
+    .pill{padding:6px 10px; border-radius:999px; background:rgba(55,197,151,.12); color:var(--accent-2); font-size:12px; font-weight:700; border:1px solid rgba(55,197,151,.35)}
+    .spotlight{display:grid; grid-template-columns:120px 1fr; gap:16px; align-items:center}
+    .spotlight img{width:120px; height:120px; object-fit:cover; border-radius:12px; border:1px solid rgba(255,255,255,.08)}
+    .spotlight h3{margin:0; font-size:20px}
+    .spotlight small{color:var(--muted)}
+    .links{display:flex; gap:14px; flex-wrap:wrap}
+    footer{opacity:.8; font-size:14px; margin-top:28px}
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0}
 
-	  header.site,
-	  .hero,
-	  .section {
-		background: transparent !important;   /* show the video through */
-		backdrop-filter: blur(6px);           /* keep readability */
-		border-color: rgba(255,255,255,0.18) !important;
-	  }
-
-	  /* soften buttons/links but keep legible over motion */
-	  nav a, .btn, .link {
-		background: rgba(100,140,130,0.10) !important; /* #648C82 @ 10% */
-		border-color: rgba(100,140,130,0.25) !important;
-	  }
-			  /* Stack fix: show the video through transparent panels */
-		.video-bg { z-index: 0 !important; }          /* bring video above body background */
-		.scrim    { z-index: 1 !important; }          /* keep if you re-enable it later */
-		header.site, main, footer {
-		  position: relative; 
-		  z-index: 2;                                 /* keep content above the video */
-		}
-		/* optional: ensure clicks go to content, not the video */
-		.video-bg, .video-bg * { pointer-events: none; 
-	  }
-		/* Zoom & crop the background video to hide the right edge */
-		:root{
-		  --bg-zoom: 1.29;     /* 1.05–1.30 = how much to zoom in */
-		  --bg-focus-x: 35%;   /* 0% left  ↔  100% right */
-		  --bg-focus-y: 52%;   /* 0% top   ↔  100% bottom */
-	  }
-		.video-bg video{
-		  object-fit: cover;
-		  object-position: var(--bg-focus-x) var(--bg-focus-y);
-		  transform: scale(var(--bg-zoom)) translateZ(0);
-		  transform-origin: var(--bg-focus-x) var(--bg-focus-y);
-	  }
-	  /* === Always-legible text pack === */
-		:root{
-		  --text-strong: #EAF2EF;            /* near-white */
-		  --text-soft:   #D7E6E1;
-		  --plate:       rgba(1, 2, 4, 0.1); /* subtle dark plate for long copy */
-		  --halo-dark:   rgba(0,0,0,0.55);
-		  --halo-mid:    rgba(0,0,0,0.35);
-		  --halo-lite:   rgba(255,255,255,0.15);
-		}
-
-		/* Headings + body text over video */
-		.hero h1, .hero p,
-		.section h2, .section p,
-		.section small, footer, .disclaimer,
-		label {
-		  color: var(--text-strong) !important;
-		  text-shadow:
-			0 1px 1px var(--halo-dark),
-			0 0 3px var(--halo-mid),
-			0 0 8px var(--halo-mid),
-			0 0 1px var(--halo-lite);
-		  -webkit-text-stroke: 0.4px rgba(0,0,0,0.25); /* Chrome/Safari safety */
-		  text-rendering: optimizeLegibility;
-		}
-
-		/* Inputs + buttons readable everywhere */
-		input, button, .btn, nav a, .link {
-		  color: var(--text-strong) !important;
-		}
-		input::placeholder {
-		  color: color-mix(in oklab, var(--text-strong) 65%, transparent);
-		}
-
-		/* Plate only behind the text column (not the image) */
-		.hero > div:first-child,
-		.section {
-		  background: var(--plate);
-		  backdrop-filter: blur(4px);
-		  border-radius: 14px;
-		  padding: clamp(12px, 2vw, 20px);
-		}
-
-		/* If footer text feels faint */
-		footer, .disclaimer { color: var(--text-soft) !important; 
-		}
-
-	</style>
-  <script defer src="js/main.js" type="module"></script>
+    @media (max-width: 860px){ .grid{grid-template-columns:1fr} }
+  </style>
 </head>
 <body>
-  <div class="video-bg" aria-hidden="true">
-    <video id="bgVideo" autoplay muted loop playsinline poster="media/retreat-poster.jpg">
-      <source src="media/retreat.mp4" type="video/mp4">
-    </video>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1>ShowMeGrow</h1>
+      </div>
+      <nav class="links">
+        <a class="cta-btn" href="mailto:qs@showmegrow.info">Email me</a>
+        <a href="https://weedcommaplease.com" aria-label="WeedCommaPlease blog">WCP blog →</a>
+      </nav>
+    </header>
+
+    <main class="grid">
+      <section class="hero">
+        <span class="pill">Missouri • Consumer-first</span>
+        <h2>Find products that actually work for <em>you</em>.</h2>
+        <p>Track strains, batches, and effects. Translate labels into plain language. Learn from transparent data across Missouri dispensaries.</p>
+
+        <div class="card">
+          <div class="spotlight" id="spotlight">
+            <img id="spotlightImg" alt="Spotlight strain image" src="" />
+            <div>
+              <h3 id="spotlightName">Loading spotlight…</h3>
+              <small id="spotlightMeta">—</small>
+              <div style="margin-top:10px" class="links">
+                <a id="lucidLink" href="#">LucidID ↗</a>
+                <a id="reviewLink" href="https://weedcommaplease.com" title="Read the review on WCP">Read review</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-top:14px; color:var(--muted)">Spotlight randomizes from a local manifest for now; we’ll swap to LucidID scans and image metadata in the next step.</p>
+      </section>
+
+      <aside class="stack">
+        <form id="signup" class="card" autocomplete="on">
+          <h3 style="margin:0 0 8px">Join the newsletter</h3>
+          <p style="margin:0 0 12px; color:var(--muted)">Get Missouri product spotlights and data tips. Uses Firebase for privacy‑respecting storage.</p>
+          <label class="sr-only" for="name">Name</label>
+          <input id="name" name="name" placeholder="Name" required style="width:100%; padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:#0c2229; color:var(--ink)" />
+          <label class="sr-only" for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="Email" required style="width:100%; padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:#0c2229; color:var(--ink)" />
+          <button class="cta-btn" type="submit">Sign up</button>
+          <small id="msg" style="display:block; margin-top:8px; color:var(--muted)">No spam. Unsubscribe anytime.</small>
+        </form>
+
+        <div class="card">
+          <h3 style="margin:0 0 8px">What this is</h3>
+          <p style="margin:0">ShowMeGrow is a consumer notebook for Missouri: capture your experiences, decode terpenes, and build a personal map of what helps.</p>
+        </div>
+
+        <div class="card">
+          <h3 style="margin:0 0 8px">Where to read reviews</h3>
+          <p style="margin:0">Deep dives and Missouri anecdotes live on <a href="https://weedcommaplease.com">WeedCommaPlease</a>. This site keeps the data clean.</p>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <p>© <span id="year"></span> ShowMeGrow.info • Built in Missouri</p>
+    </footer>
   </div>
-  <div class="scrim" aria-hidden="true"></div>
 
-  <header class="site">
-    <div class="brand">Show Me Grow Info</div>
-    <nav>
-      <a href="#newsletter" class="link">Newsletter</a>
-      <a href="https://weedcommaplease.com" target="_blank" rel="noopener" class="link">W, P — Blog</a>
-      <a href="mailto:qs@showmegrow.info" class="btn">Email me</a>
-    </nav>
-  </header>
+  <script>
+    // ——— Year
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-  <main>
-    <section id="spotlight" class="hero" aria-live="polite">
-      <div>
-        <h1 id="spotlight-name">Spotlight Strain</h1>
-        <p id="spotlight-summary">Rotates automatically from your product data. Tap Randomize to cycle.</p>
-        <div id="spotlight-tags" class="tags"></div>
-        <div class="actions">
-          <a id="spotlight-lucid" href="#" target="_blank" rel="noopener" class="btn-accent btn">View LucidID</a>
-          <button id="randomize" class="btn" type="button">Randomize</button>
-        </div>
-      </div>
-      <div>
-        <img id="spotlight-image" src="assets/images/placeholder.jpg" alt="Spotlight product image">
-      </div>
-    </section>
+    // ——— Spotlight (temporary manifest → replace with LucidID + image EXIF)
+    // If /images/products/manifest.json exists, we use it. Otherwise fallback to the inline array.
+    const fallbackProducts = [
+      { name: 'Tahoe OG', brand: 'Example Brand', form: 'Flower', 
+        lucid: '#', review: 'https://weedcommaplease.com', img: 'https://images.unsplash.com/photo-1626973368032-99b2899ac9fb?q=80&w=800&auto=format&fit=crop' },
+      { name: 'Blue Sage Butter Cookie', brand: 'Example Edibles', form: 'Edible',
+        lucid: '#', review: 'https://weedcommaplease.com', img: 'https://images.unsplash.com/photo-1583947581924-860bda6a26f1?q=80&w=800&auto=format&fit=crop' },
+      { name: 'Tahiti Lime', brand: 'Example Vape', form: 'Cart',
+        lucid: '#', review: 'https://weedcommaplease.com', img: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=800&auto=format&fit=crop' }
+    ];
 
-    <section id="newsletter" class="section" aria-labelledby="newsletter-title">
-      <h2 id="newsletter-title">Sign up for our newsletter</h2>
-      <p>Site info; new posts; local Missouri strain notes. Let me know if you want to be updated!.</p>
-      <form id="subscribe-form" aria-label="Newsletter sign-up">
-        <div class="form-row">
-          <label for="email" class="visually-hidden">Email</label>
-          <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required />
-          <button type="submit" class="btn-accent btn">Subscribe</button>
-        </div>
-        <small id="subscribe-status" role="status" aria-live="polite"></small>
-      </form>
-      <small class="disclaimer">You can unsubscribe anytime. We never sell your data.</small>
-    </section>
-  </main>
+    async function pickSpotlight(){
+      let items = fallbackProducts;
+      try{
+        const res = await fetch('/images/products/manifest.json', {cache:'no-cache'});
+        if(res.ok){ items = await res.json(); }
+      }catch(e){ /* fallback */ }
+      const choice = items[Math.floor(Math.random()*items.length)];
+      document.getElementById('spotlightImg').src = choice.img;
+      document.getElementById('spotlightName').textContent = choice.name;
+      document.getElementById('spotlightMeta').textContent = `${choice.brand} • ${choice.form}`;
+      document.getElementById('lucidLink').href = choice.lucid || '#';
+      document.getElementById('reviewLink').href = choice.review || 'https://weedcommaplease.com';
+    }
+    pickSpotlight();
 
-  <footer>
-    <div>© 2025 Show Me Grow Info (TYP, LLC). Made for Missouri cannabis consumers.</div>
-    <small class="disclaimer">21+ only. This site does not sell cannabis and is not a dispensary.</small>
-  </footer>
+    // ——— Newsletter (Firebase-ready)
+    // 1) Go to https://console.firebase.google.com → Add project → Web app.
+    // 2) Replace the config below with your keys. Enable Firestore (or Realtime DB).
+    // 3) Create a collection "newsletter" with fields: name, email, ts.
+    // If config is left as placeholders, we degrade gracefully and log to console.
 
-  <!-- Firebase (fill in your config in js/firebase-config.js) -->
-  <!-- When deployed, these load from Google's CDN. -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    const FIREBASE_ENABLED = false; // flip true after adding config & scripts
+
+    // Optional: paste Firebase CDN scripts right above this line when enabling.
+    // <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"><\/script>
+    // <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"><\/script>
+
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_BUCKET",
+      messagingSenderId: "YOUR_SENDER",
+      appId: "YOUR_APP_ID"
+    };
+
+    const form = document.getElementById('signup');
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const msg = document.getElementById('msg');
+
+      if(!name || !email){ msg.textContent = 'Please enter your name and email.'; return; }
+
+      try{
+        if(FIREBASE_ENABLED && window.firebase){
+          const app = firebase.initializeApp(firebaseConfig);
+          const db = firebase.firestore(app);
+          await db.collection('newsletter').add({ name, email, ts: new Date().toISOString() });
+          msg.textContent = 'Thanks! You\'re on the list.';
+        } else {
+          console.log('[DEV only] Would save to Firebase:', {name,email});
+          msg.textContent = 'Saved locally (dev mode). I\'ll switch this to Firebase next step.';
+        }
+        form.reset();
+      }catch(err){
+        console.error(err);
+        msg.textContent = 'Hmm, that didn\'t work. Try again in a bit?';
+      }
+    });
+  </script>
 </body>
 </html>

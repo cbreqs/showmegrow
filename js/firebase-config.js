@@ -6,13 +6,14 @@ export let firebaseApp = null;
 export let db = null;
 
 try {
-  const config = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+   const config = {
+    apiKey: "AIzaSyB9TwtGcDQJrJgYlcpUmtggJxvcF6MTlCk",
+    authDomain: "showmegrowinfo.firebaseapp.com",
+    databaseURL: "https://showmegrowinfo-default-rtdb.firebaseio.com",
+    projectId: "showmegrowinfo",
+    storageBucket: "showmegrowinfo.firebasestorage.app",
+    messagingSenderId: "317414799927",
+    appId: "1:317414799927:web:81a6a76b52511bbad51db2"
   };
   if (!Object.values(config).some(v => String(v).startsWith('YOUR_'))) {
     firebaseApp = firebase.initializeApp(config);
