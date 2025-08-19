@@ -34,8 +34,8 @@
     header.site, main, footer { position: relative; z-index: 2; }
   </style>
 </head>
-
 <body>
+  <!-- Background video -->
   <div class="video-bg" aria-hidden="true">
     <video id="bgVideo"
            autoplay
@@ -51,6 +51,7 @@
 
   <div class="scrim" aria-hidden="true"></div>
 
+  <!-- Header -->
   <header class="site">
     <div class="brand">Show Me Grow Info</div>
     <nav>
@@ -60,27 +61,39 @@
     </nav>
   </header>
 
+  <!-- Main content -->
   <main>
-    <section class="hero">
-      <h2>Spotlight Strain</h2>
-      <div id="spotlight">Loading…</div>
-      <button id="refreshSpotlight" class="btn">Randomize</button>
-      <a id="lucididLink" href="#" target="_blank" class="btn">View LucidID</a>
+    <!-- Spotlight strain -->
+    <section id="spotlight" class="hero" aria-live="polite">
+      <div>
+        <h1 id="spotlight-name">Spotlight Strain</h1>
+        <p id="spotlight-summary">Rotates automatically from your product data.</p>
+        <div id="spotlight-tags" class="tags"></div>
+        <div class="actions">
+          <a id="spotlight-lucid" href="#" target="_blank" rel="noopener" class="btn">View LucidID</a>
+          <button id="randomize" class="btn" type="button">Randomize</button>
+        </div>
+      </div>
+      <div>
+        <img id="spotlight-image" src="assets/images/placeholder.jpg" alt="Spotlight product image">
+      </div>
     </section>
 
-    <section class="section" id="newsletter">
-      <h2>Sign up for our newsletter</h2>
-      <p>Site info; new posts; local Missouri strain notes. Let me know if you want to be updated:</p>
-      <form id="emailForm">
-        <input type="email" id="emailInput" placeholder="you@example.com" required />
-        <button type="submit" class="btn">Subscribe</button>
-      </form>
-      <p class="disclaimer">You can unsubscribe anytime. We never sell your data.</p>
-    </section>
+    <!-- Newsletter -->
+     <section class="section" id="newsletter">
+        <h2>Sign up for our newsletter</h2>
+        <p>Site info; new posts; local Missouri strain notes. Let me know if you want to be updated:</p>
+        <form id="emailForm">
+          <input type="email" id="emailInput" placeholder="you@example.com" required />
+          <button type="submit" class="btn">Subscribe</button>
+        </form>
+        <p class="disclaimer">You can unsubscribe anytime. We never sell your data.</p>
+      </section>
   </main>
 
+  <!-- Footer -->
   <footer>
-    <p>© 2025 Show Me Grow Info (TYP, LLC). Made for Missouri cannabis consumers.<br />
+    <p>© 2025 Show Me Grow Info (TYP, LLC). Made for Missouri cannabis consumers.<br>
     21+ only. This site does not sell cannabis and is not a dispensary.</p>
   </footer>
 </body>
