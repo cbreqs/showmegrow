@@ -4,56 +4,113 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Show Me Grow</title>
-      <!-- Firebase SDKs -->
-    <script type="module">
-      // Import the functions you need from the SDKs
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-      import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-      // Your web app's Firebase configuration
-        const firebaseConfig = {
-        apiKey: "AIzaSyB9TwtGcDQJrJgYlcpUmtggJxvcF6MTlCk",
-        authDomain: "showmegrowinfo.firebaseapp.com",
-        projectId: "showmegrowinfo",
-        storageBucket: "showmegrowinfo.firebasestorage.app",
-        messagingSenderId: "317414799927",
-        appId: "1:317414799927:web:81a6a76b52511bbad51db2"
-      };
-
-      const app = initializeApp(firebaseConfig);
-      const db = getFirestore(app);
-
-      window.submitEmail = async function (event) {
-        event.preventDefault();
-        const emailInput = document.getElementById("email");
-        const email = emailInput.value.trim();
-
-        if (!email) return alert("Please enter a valid email.");
-
-        try {
-          await addDoc(collection(db, "signups"), {
-            email,
-            timestamp: new Date()
-          });
-          emailInput.value = "";
-            const confirmation = document.getElementById("signup-confirmation");
-            confirmation.classList.add("show");
-            setTimeout(() => {
-              confirmation.classList.remove("show");
-            }, 3000);
-        } catch (e) {
-          console.error("Error adding document: ", e);
-          alert("Something went wrong. Try again?");
-        }
-      };
-    </script>
-
+  
   <link rel="stylesheet" href="style.css">
+
+  <script type="module">
+    // Import the functions you need from the SDKs
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyB9TwtGcDQJrJgYlcpUmtggJxvcF6MTlCk",
+      authDomain: "showmegrowinfo.firebaseapp.com",
+      projectId: "showmegrowinfo",
+      storageBucket: "showmegrowinfo.firebasestorage.app",
+      messagingSenderId: "317414799927",
+      appId: "1:317414799927:web:81a6a76b52511bbad51db2"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // --- 1. HANDLE EMAILS ---
+    window.submitEmail = async function (event) {
+      event.preventDefault();
+      const emailInput = document.getElementById("email");
+      const email = emailInput.value.trim();
+
+      if (!email) return alert("Please enter a valid email.");
+
+      try {
+        await addDoc(collection(db, "signups"), {
+          email,
+          timestamp: new Date()
+        });
+        emailInput.value = "";
+        const confirmation = document.getElementById("signup-confirmation");
+        confirmation.classList.add("show");
+        setTimeout(() => {
+          confirmation.classList.remove("show");
+        }, 3000);
+      } catch (e) {
+        console.error("Error adding document: ", e);
+        alert("Something went wrong. Try again?");
+      }
+    };
+
+    /* // --- 2. HANDLE SPOTLIGHT STRAIN (COMMENTED OUT) ---
+    // Uncomment this section when your 'strains' collection is ready in Firebase.
+    
+    window.loadSpotlightStrain = async function() {
+      const strainContainer = document.getElementById('strain-name');
+      
+      try {
+        const querySnapshot = await getDocs(collection(db, "strains"));
+        const strains = [];
+        
+        querySnapshot.forEach((doc) => {
+          strains.push(doc.data());
+        });
+
+        if (strains.length > 0) {
+          const randomStrain = strains[Math.floor(Math.random() * strains.length)];
+          
+          strainContainer.innerHTML = `
+            <strong>${randomStrain.name || 'Unknown Name'}</strong><br>
+            <em>${randomStrain.type || 'Type Unknown'}</em><br>
+            <p>${randomStrain.description || 'No description available.'}</p>
+          `;
+        } else {
+          strainContainer.innerHTML = "No strains found in database.";
+        }
+      } catch (e) {
+        console.error("Error fetching strains: ", e);
+        strainContainer.innerHTML = "Error loading strains.";
+      }
+    }
+
+    // Load initial strain on page load
+    window.loadSpotlightStrain();
+    */
+
+    // Attach listeners
+    document.addEventListener("DOMContentLoaded", () => {
+        
+        /*
+        const refreshBtn = document.getElementById('refresh-spotlight');
+        if(refreshBtn) {
+            refreshBtn.addEventListener('click', window.loadSpotlightStrain);
+        }
+        */
+        
+        // Mailing List Toggle Logic
+        const mailingListButton = document.querySelector('a[href="#signup"]');
+        const signupForm = document.getElementById('signup');
+        if(mailingListButton){
+            mailingListButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                signupForm.classList.toggle('active');
+            });
+        }
+    });
+  </script>
 </head>
 
-<body class="light-mode">
+<body>
 
-  <!-- Branding at Top -->
   <div class="content">
     <div class="text-container">
       <h1>Show Me Grow</h1>
@@ -61,94 +118,19 @@
     </div>
   </div>
 
-  <!-- Mode Toggle Button -->
-  <button id="mode-toggle">Switch Mode</button>
-
-  <!-- Spotlight Strain Centered -->
-  <div class="spotlight">
-    <h2>Spotlight Strain</h2>
-    <p id="strain-name">Loading...</p>
-    <button id="refresh-spotlight">Refresh Spotlight</button>
-  </div>
-
-  <!-- Bottom Buttons -->
   <div class="button-group">
     <a href="mailto:cb@showmegrow.info" class="button">Email Us</a>
     <a href="#signup" class="button">Join Mailing List</a>
   </div>
 
-  <!-- Signup Form -->
   <div id="signup" class="signup-form">
     <form onsubmit="submitEmail(event)">
       <input id="email" type="email" placeholder="Your email" required />
       <button type="submit">Notify Me</button>
     </form>
   </div>
+  
+  <div id="signup-confirmation" class="confirmation-popup">Thanks! You’ll be notified.</div>
 
-  <!-- Main Scripts -->
-  <script>
-  console.log("Show Me Grow – JS Loaded");
-
-  // Set Background based on Time
-  function setBackground() {
-    const hour = new Date().getHours();
-    if (hour >= 6 && hour < 18) {
-      document.body.classList.add('light-mode');
-      document.body.classList.remove('dark-mode');
-    } else {
-      document.body.classList.add('dark-mode');
-      document.body.classList.remove('light-mode');
-    }
-  }
-
-  setBackground();
-
-  // Mode Toggle Button
-  const toggleButton = document.getElementById('mode-toggle');
-  toggleButton.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    document.body.classList.toggle('light-mode');
-  });
-
-  // Mailing List Toggle Button
-  const mailingListButton = document.querySelector('a[href="#signup"]');
-  const signupForm = document.getElementById('signup');
-  mailingListButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    signupForm.classList.toggle('active');
-  });
-
-  // Load and Display Random Spotlight Strain
-  async function loadSpotlightStrain() {
-    const { data, error } = await client
-      .from('strains')
-      .select('name, type, description');
-
-    if (error) {
-      console.error('Error fetching strains:', error);
-      return;
-    }
-
-    if (data.length > 0) {
-      const randomStrain = data[Math.floor(Math.random() * data.length)];
-      document.getElementById('strain-name').innerHTML = `
-        <strong>${randomStrain.name}</strong><br>
-        <em>${randomStrain.type || 'Type Unknown'}</em><br>
-        <p>${randomStrain.description || 'No description available.'}</p>
-      `;
-    }
-  }
-
-  // Attach Refresh Button Listener
-  const refreshButton = document.getElementById('refresh-spotlight');
-  if (refreshButton) {
-    refreshButton.addEventListener('click', loadSpotlightStrain);
-  }
-
-  // Load initial strain on page load
-  loadSpotlightStrain();
-
-  </script>
-<div id="signup-confirmation" class="confirmation-popup">Thanks! You’ll be notified.</div>
 </body>
 </html>
