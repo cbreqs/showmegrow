@@ -51,13 +51,12 @@
       }
     };
 
-    /* // --- 2. HANDLE SPOTLIGHT STRAIN (COMMENTED OUT) ---
-    // Uncomment this section when your 'strains' collection is ready in Firebase.
-    
+    // --- 2. HANDLE SPOTLIGHT STRAIN ---
     window.loadSpotlightStrain = async function() {
       const strainContainer = document.getElementById('strain-name');
       
       try {
+        // Fetch all documents from the 'strains' collection
         const querySnapshot = await getDocs(collection(db, "strains"));
         const strains = [];
         
@@ -66,6 +65,7 @@
         });
 
         if (strains.length > 0) {
+          // Pick a random strain
           const randomStrain = strains[Math.floor(Math.random() * strains.length)];
           
           strainContainer.innerHTML = `
@@ -82,19 +82,16 @@
       }
     }
 
-    // Load initial strain on page load
-    window.loadSpotlightStrain();
-    */
-
     // Attach listeners
     document.addEventListener("DOMContentLoaded", () => {
         
-        /*
+        // Load initial strain immediately
+        window.loadSpotlightStrain();
+        
         const refreshBtn = document.getElementById('refresh-spotlight');
         if(refreshBtn) {
             refreshBtn.addEventListener('click', window.loadSpotlightStrain);
         }
-        */
         
         // Mailing List Toggle Logic
         const mailingListButton = document.querySelector('a[href="#signup"]');
@@ -116,6 +113,13 @@
       <h1>Show Me Grow</h1>
       <p>Missouri Cannabis Data + Information</p>
     </div>
+  </div>
+
+  <div class="spotlight">
+    <h2>Spotlight Strain</h2>
+    <div id="strain-name">Loading...</div>
+    <br>
+    <button id="refresh-spotlight">Refresh Spotlight</button>
   </div>
 
   <div class="button-group">
