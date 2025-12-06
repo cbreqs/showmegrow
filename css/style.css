@@ -13,8 +13,8 @@ body {
   color: var(--text-color);
   height: 100vh;
   
-  /* SET YOUR BACKGROUND IMAGE HERE */
-  background: url('showMeGrow-bg.webp') no-repeat center center fixed; 
+  /* BACKGROUND IMAGE HERE */
+  background: url('../showMeGrow-bg.webp') no-repeat center center fixed; 
   background-size: cover;
   
   display: flex;
