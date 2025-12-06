@@ -1,0 +1,126 @@
+/* style.css */
+:root {
+  --text-color: #Eaeaea;
+  --accent-color: #648C82;
+  --glass-bg: rgba(0, 0, 0, 0.65); /* Dark see-through background */
+  --border-color: rgba(255, 255, 255, 0.2);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--text-color);
+  height: 100vh;
+  
+  /* SET YOUR BACKGROUND IMAGE HERE */
+  background: url('showMeGrow-bg.webp') no-repeat center center fixed; 
+  background-size: cover;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Main Title Area */
+.content {
+  text-align: center;
+  margin-bottom: 2rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.content h1 {
+  font-size: 3rem;
+  margin: 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.content p {
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+  opacity: 0.9;
+}
+
+/* The Spotlight Card */
+.spotlight {
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px); /* Blurs the background behind the card */
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  margin-bottom: 2rem;
+}
+
+.spotlight h2 {
+  margin-top: 0;
+  color: #81c784; /* A nice green for the header */
+}
+
+/* Buttons */
+.button-group {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.button, button {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid var(--border-color);
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+}
+
+.button:hover, button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Signup Form */
+.signup-form {
+  display: none; /* Hidden by default */
+  margin-top: 20px;
+}
+
+.signup-form.active {
+  display: block;
+}
+
+.signup-form input {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  margin-right: 5px;
+}
+
+/* Confirmation Popup */
+.confirmation-popup {
+  position: fixed;
+  bottom: 20px;
+  background: #4caf50;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 50px;
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+
+.confirmation-popup.show {
+  opacity: 1;
+}
+
+/* Hide the switch mode button since we have a fixed BG now */
+#mode-toggle {
+  display: none;
+}
