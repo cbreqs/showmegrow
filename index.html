@@ -55,8 +55,10 @@
     window.loadSpotlightStrain = async function() {
       const strainContainer = document.getElementById('strain-name');
       
+      // Safety check: if the container is missing, stop
+      if (!strainContainer) return;
+
       try {
-        // Fetch all documents from the 'strains' collection
         const querySnapshot = await getDocs(collection(db, "strains"));
         const strains = [];
         
@@ -65,7 +67,6 @@
         });
 
         if (strains.length > 0) {
-          // Pick a random strain
           const randomStrain = strains[Math.floor(Math.random() * strains.length)];
           
           strainContainer.innerHTML = `
