@@ -45,7 +45,7 @@ body {
 
 /* The Spotlight Card */
 .spotlight {
-  background: var(--glass-bg);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(8px); /* Blurs the background behind the card */
   padding: 2rem;
   border-radius: 16px;
