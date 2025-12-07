@@ -70,6 +70,9 @@
           const randomStrain = strains[Math.floor(Math.random() * strains.length)];
           
           strainContainer.innerHTML = `
+            <div style="color: #90EE90; font-weight: bold; text-transform: uppercase; margin-bottom: 5px;">
+              ${randomStrain.brand || 'MO Brand'}
+            </div>
             <strong>${randomStrain.name || 'Unknown Name'}</strong><br>
             <em>${randomStrain.type || 'Type Unknown'}</em><br>
             <p>${randomStrain.description || 'No description available.'}</p>
