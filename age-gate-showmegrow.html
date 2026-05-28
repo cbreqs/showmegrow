@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Age Verification | Show Me Grow Info</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #4CAF7D;
+    --green-dim: #2e7d52;
+    --bg: #0f1410;
+    --bg-surface: #161d18;
+    --bg-card: #1c261e;
+    --border: rgba(76, 175, 125, 0.18);
+    --border-hover: rgba(76, 175, 125, 0.4);
+    --text: #d4e8d8;
+    --text-muted: #5a7a62;
+    --text-dim: #3a5040;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1.5rem;
+  }
+
+  .gate {
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+  }
+
+  .wordmark {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--green);
+    margin-bottom: 0.4rem;
+  }
+
+  .tagline {
+    font-size: 0.72rem;
+    font-weight: 300;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+  }
+
+  .divider {
+    width: 32px;
+    height: 1px;
+    background: var(--green-dim);
+    margin: 0 auto 2rem;
+    opacity: 0.5;
+  }
+
+  .card {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 2rem 1.75rem 1.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .card-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .card-heading {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-heading span {
+    color: var(--green);
+  }
+
+  .dob-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.65rem;
+    text-align: left;
+  }
+
+  .dob-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1.25rem;
+  }
+
+  .dob-row select {
+    flex: 1;
+    background: var(--bg-surface);
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 300;
+    padding: 0.6rem 0.4rem;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .dob-row select:focus {
+    outline: none;
+    border-color: var(--green-dim);
+    color: var(--text);
+  }
+
+  .dob-row select.selected {
+    color: var(--text);
+  }
+
+  .dob-row select option {
+    background: var(--bg-surface);
+    color: var(--text);
+  }
+
+  .btn-enter {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: 0.5px solid var(--green-dim);
+    border-radius: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .btn-enter:hover {
+    background: rgba(76, 175, 125, 0.07);
+    border-color: var(--border-hover);
+  }
+
+  .btn-enter:active { transform: scale(0.99); }
+
+  .error-msg {
+    display: none;
+    margin-top: 0.75rem;
+    font-size: 0.76rem;
+    color: #7a9e82;
+    letter-spacing: 0.03em;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .error-msg.visible { display: block; }
+
+  .denied {
+    display: none;
+    padding: 1rem 0;
+  }
+
+  .denied p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .disclaimer {
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    line-height: 1.65;
+  }
+
+  .disclaimer a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .disclaimer a:hover { color: var(--green); }
+</style>
+</head>
+<body>
+
+<main class="gate" role="main" aria-label="Age verification">
+
+  <p class="wordmark">Show Me Grow Info</p>
+  <p class="tagline">Missouri Cannabis Data Repository</p>
+
+  <div id="gate-form">
+    <div class="card">
+      <p class="card-title">Access Required</p>
+      <p class="card-heading">You must be <span>21+</span> to enter this site.</p>
+
+      <p class="dob-label">Date of Birth</p>
+      <div class="dob-row">
+        <select id="dob-month" aria-label="Birth month">
+          <option value="" disabled selected>MM</option>
+          <option value="1">01</option>
+          <option value="2">02</option>
+          <option value="3">03</option>
+          <option value="4">04</option>
+          <option value="5">05</option>
+          <option value="6">06</option>
+          <option value="7">07</option>
+          <option value="8">08</option>
+          <option value="9">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+        </select>
+        <select id="dob-day" aria-label="Birth day">
+          <option value="" disabled selected>DD</option>
+        </select>
+        <select id="dob-year" aria-label="Birth year">
+          <option value="" disabled selected>YYYY</option>
+        </select>
+      </div>
+
+      <button class="btn-enter" onclick="verifyAge()">Enter Site</button>
+      <p class="error-msg" id="error-msg" role="alert"></p>
+    </div>
+
+    <div class="denied" id="denied-view" aria-live="polite">
+      <p>You must be 21 or older to access this site.</p>
+    </div>
+
+    <p class="disclaimer">
+      By entering you confirm you are 21 years of age or older and agree to our
+      <a href="https://showmegrow.info/#terms">Terms of Use</a>.
+      Cannabis information is intended for adults only.
+    </p>
+  </div>
+
+</main>
+
+<script>
+  const currentYear = new Date().getFullYear();
+  const daySelect = document.getElementById('dob-day');
+  const yearSelect = document.getElementById('dob-year');
+
+  for (let d = 1; d <= 31; d++) {
+    const o = document.createElement('option');
+    o.value = d;
+    o.textContent = String(d).padStart(2, '0');
+    daySelect.appendChild(o);
+  }
+
+  for (let y = currentYear - 18; y >= 1900; y--) {
+    const o = document.createElement('option');
+    o.value = y;
+    o.textContent = y;
+    yearSelect.appendChild(o);
+  }
+
+  ['dob-month', 'dob-day', 'dob-year'].forEach(id => {
+    document.getElementById(id).addEventListener('change', function () {
+      this.classList.add('selected');
+      document.getElementById('error-msg').classList.remove('visible');
+    });
+  });
+
+  function verifyAge() {
+    const m = document.getElementById('dob-month').value;
+    const d = document.getElementById('dob-day').value;
+    const y = document.getElementById('dob-year').value;
+    const errorEl = document.getElementById('error-msg');
+
+    if (!m || !d || !y) {
+      errorEl.textContent = '// please enter your full date of birth';
+      errorEl.classList.add('visible');
+      return;
+    }
+
+    const dob = new Date(y, m - 1, d);
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    const mDiff = today.getMonth() - dob.getMonth();
+    if (mDiff < 0 || (mDiff === 0 && today.getDate() < dob.getDate())) age--;
+
+    if (age >= 21) {
+      sessionStorage.setItem('smg_age_verified', '1');
+      window.location.href = 'https://showmegrow.info/index.html';
+    } else {
+      document.getElementById('gate-form').querySelector('.card').style.display = 'none';
+      document.getElementById('denied-view').style.display = 'block';
+    }
+  }
+</script>
+
+</body>
+</html>
